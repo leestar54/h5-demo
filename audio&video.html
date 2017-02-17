@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>音频&视频</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="./css/dog.css">
+    <style type="text/css">
+    body,
+    html {
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+        max-width: 640px;
+        max-height: 1136px;
+        margin: auto;
+    }
+    
+    .hide {
+        display: none;
+    }
+    
+    .loading,
+    .container {
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        margin: 0;
+        border-radius: 0px;
+        position: relative;
+        /*background-color: rgba(0, 0, 0, 0.5);*/
+    }
+    
+    /*音乐按钮*/
+    
+    #wraper_music {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
+        z-index: 999;
+        border-radius: 40px;
+        display: block;
+    }
+    
+    #btn_play_music {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        background-size: 40px 40px;
+    }
+    
+    .c_btn_play_music_playing {
+        background: url(./img/music_playing.png) no-repeat;
+        -webkit-animation: kf_music_playing 8s linear infinite;
+        animation: kf_music_playing 8s linear infinite;
+    }
+    
+    .c_btn_play_music_paused {
+        background: url(./img/music_stop.png) no-repeat;
+    }
+    
+    @keyframes kf_music_playing {
+        0% {
+            -webkit-transform: rotateZ(0deg);
+        }
+        100% {
+            -webkit-transform: rotateZ(360deg);
+        }
+    }
+    
+    @-webkit-keyframes kf_music_playing {
+        0% {
+            -webkit-transform: rotateZ(0deg);
+        }
+        100% {
+            -webkit-transform: rotateZ(360deg);
+        }
+    }
+    
+    @media screen and (max-width: 380px) {
+        #btn_qtcs {
+            font-size: small;
+        }
+        #btn_toumiao {
+            font-size: small;
+        }
+    }
+    
+    @media screen and (max-width: 320px) {
+        #btn_qtcs {
+            font-size: x-small;
+        }
+        #btn_toumiao {
+            font-size: x-small;
+        }
+    }
+    </style>
+</head>
+
+<body style="">
+    <div class="container">
+        <div id="wraper_music">
+            <div id="btn_play_music" class="c_btn_play_music_playing"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <audio src="./audio/95484.m4a">
+        </audio>
+        <audio style="width: 100%" src="./audio/95484.m4a" controls>
+        </audio>
+        <!-- <audio src="./audio/107192078.m4a" autoplay="autoplay" controls>
+        </audio> -->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <video style="width: 100%" src="./video/test.mp4" preload autoplay controls>
+        </video>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/PreloadJS/0.6.0/preloadjs.min.js"></script>
+    <script src="http://cdn.bootcss.com/SoundJS/0.6.0/soundjs.min.js"></script>
+    <script>
+    //可视区居中显示
+    var window_height = $(window).height();
+    if (window_height > 1136) {
+        var temp_top = ($(window).height() - 1136) / 2;
+        $('body').css('margin-top', temp_top);
+    }
+    //建议使用资源清单，方便管理，如果资源较多，可以考虑独立出json文件，脚本自动生成。
+    var manifest = [{
+        id: '告白气球',
+        src: './audio/107192078.m4a'
+    }, {
+        id: '一生有你',
+        src: './audio/95484.m4a'
+    }, ]
+
+    var queue = new createjs.LoadQueue();
+    //SoundJS默认用的是复杂的Web Audio接口，这会导致加载音频变慢，所以显示注册使用html的audio即可
+    createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
+    //如果需要加载音频，需要注册SoundJs插件
+    queue.installPlugin(createjs.Sound);
+    queue.on("complete", function() {
+        //createjs.Sound.play("告白气球");
+        music_player = new Player($('#btn_play_music'), "./audio/107192078.m4a");
+    }, this);
+    queue.on("progress", function(event) {
+        console.log("Progress:", queue.progress, event.progress);
+    });
+    //设置并列加载，否则每次只加载一个，太耗时
+    queue.setMaxConnections(5);
+    queue.maintainScriptOrder = true;
+    queue.loadManifest(manifest);
+
+    //---------start播放器代码---------
+    function Player(el, src) {
+        this.el = el;
+        this.isPlay = true;
+        if (src == undefined) {
+            src = '';
+        }
+        this.init(src);
+    }
+    Player.prototype = {
+            init: function(src) {
+                var _this = this,
+                    attr = {
+                        loop: true,
+                        preload: "auto",
+                        autoplay: true,
+                        src: src
+                    };
+
+                this._audio = new Audio;
+                for (var i in attr) {
+                    attr.hasOwnProperty(i) && i in this._audio && (this._audio[i] = attr[i]);
+                }
+
+                this.inited = false;
+                $(this._audio).on('durationchange', function() {
+                    // 播放加载
+                    if (_this._audio.duration > 1) {
+                        _this.inited = true;
+                    }
+                });
+
+                $(this._audio).on('ended', function() {
+                    // 播放结束
+                    _this._audio.currentTime = 0;
+                    _this.isPlay = false;
+                    _this._play();
+                });
+
+                if (src != '') {
+                    this._audio.load();
+                }
+
+                if (typeof this.el !== 'string') {
+                    this.el.on('click', function() {
+                        _this._play();
+                    });
+                }
+            },
+
+            _load: function() {
+                this._audio.load();
+            },
+
+            _src: function(src) {
+                this._audio['src'] = src;
+            },
+
+            _isplay: function() {
+                return this.isPlay;
+            },
+
+            _play: function() {
+                if (!this.isPlay) {
+                    this._audio.play();
+                    if (typeof this.el !== 'string') {
+                        this.el.removeClass('c_btn_play_music_paused');
+                        this.el.addClass('c_btn_play_music_playing');
+                    }
+                } else {
+                    this._audio.pause();
+                    if (typeof this.el !== 'string') {
+                        this.el.removeClass('c_btn_play_music_playing');
+                        this.el.addClass('c_btn_play_music_paused');
+                    }
+                }
+                this.isPlay = !this.isPlay;
+            },
+
+            _playOn: function() {
+                this._audio.play();
+                if (typeof this.el !== 'string') {
+                    this.el.removeClass('c_btn_play_music_paused');
+                    this.el.addClass('c_btn_play_music_playing');
+                }
+                this.isPlay = true;
+            },
+
+            _playOff: function() {
+                this._audio.pause();
+                if (typeof this.el !== 'string') {
+                    this.el.removeClass('c_btn_play_music_playing');
+                    this.el.addClass('c_btn_play_music_paused');
+                }
+                this.isPlay = false;
+            },
+
+            _volume: function(num) {
+                this._audio.volume = num;
+            }
+        }
+        //---------end播放器代码---------
+    </script>
+</body>
+
+</html>
