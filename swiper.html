@@ -2,11 +2,12 @@
 <html>
 
 <head>
-    <title>音频&视频</title>
+    <title>swiper.js</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./css/animate.min.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
     <link rel="stylesheet" href="./css/dog.css">
     <style type="text/css">
     body,
@@ -23,7 +24,7 @@
     }
     
     .loading,
-    .container {
+    .swiper-container {
         width: 100%;
         height: 100%;
         left: 0%;
@@ -34,6 +35,49 @@
         /*background-color: rgba(0, 0, 0, 0.5);*/
     }
     
+    .swiper-slide img {
+        width: 100%;
+        position: absolute;
+        top: 20%
+    }
+    /*滑动提示*/
+    
+    #array {
+        position: absolute;
+        z-index: 999;
+        animation: tipmove 1.5s infinite ease-in-out;
+        -webkit-animation: tipmove 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes tipmove {
+        0% {
+            bottom: 10px;
+            opacity: 0
+        }
+        50% {
+            bottom: 15px;
+            opacity: 1
+        }
+        100% {
+            bottom: 20px;
+            opacity: 0
+        }
+    }
+    
+    @-webkit-keyframes tipmove {
+        0% {
+            bottom: 10px;
+            opacity: 0
+        }
+        50% {
+            bottom: 15px;
+            opacity: 1
+        }
+        100% {
+            bottom: 20px;
+            opacity: 0
+        }
+    }
     /*音乐按钮*/
     
     #wraper_music {
@@ -103,32 +147,49 @@
 </head>
 
 <body style="">
-    <div class="container">
-        <div id="wraper_music">
-            <div id="btn_play_music" class="c_btn_play_music_playing"></div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div id="wraper_music">
+                    <div id="btn_play_music" class="c_btn_play_music_playing"></div>
+                </div>
+                <br>
+                <br>
+                <audio src="./audio/95484.m4a">
+                </audio>
+                <audio style="width: 100%" src="./audio/95484.m4a" controls>
+                </audio>
+                <br>
+                <video id="video" style="width: 100%" src="./video/test.mp4" preload autoplay controls>
+                </video>
+                <img style="top:50%" class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="0.3s" src="./img/5.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/7.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/1.jpg" alt="">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/9.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/2.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/3.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/4.jpg" alt="">
+            </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <audio src="./audio/95484.m4a">
-        </audio>
-        <audio style="width: 100%" src="./audio/95484.m4a" controls>
-        </audio>
-        <!-- <audio src="./audio/107192078.m4a" autoplay="autoplay" controls>
-        </audio> -->
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <video style="width: 100%" src="./video/test.mp4" preload autoplay controls>
-        </video>
+        <div class="swiper-pagination"></div>
+        <!-- 向上滑动提示 -->
+        <img class="deferred" src="./img/web-swipe-tip.png" style="width:20px;height:15px;left: 50%;margin-left: -10px;" id="array">
     </div>
     <script src="./js/jquery.min.js"></script>
     <script src="./js/preloadjs.min.js"></script>
     <script src="./js/soundjs.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/swiper.animate.min.js"></script>
     <script>
     //可视区居中显示
     var window_height = $(window).height();
@@ -144,6 +205,9 @@
         id: '一生有你',
         src: './audio/95484.m4a'
     }, ]
+
+    var music_player;
+    var vd = document.getElementById('video');
 
     var queue = new createjs.LoadQueue();
     //SoundJS默认用的是复杂的Web Audio接口，这会导致加载音频变慢，所以显示注册使用html的audio即可
@@ -161,6 +225,34 @@
     queue.setMaxConnections(5);
     queue.maintainScriptOrder = true;
     queue.loadManifest(manifest);
+
+    $(function() {
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            loop: false,
+            pagination: '.swiper-pagination',
+            onInit: function(swiper) {
+                swiperAnimateCache(swiper); //隐藏动画元素 
+                swiperAnimate(swiper); //初始化完成开始动画
+            },
+            onSlideChangeEnd: function(swiper) {
+                swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+                if (swiper.activeIndex != 0) {
+                    vd.pause();
+                    music_player._playOff();
+                } else {
+                    vd.play();
+                    music_player._playOn();
+                }
+            }
+        });
+
+        //重复执行动画
+        $('.swiper-slide:eq(0) img').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $(this).removeClass('animated fadeInUp bounceInRight');
+            $('.swiper-slide:eq(0) img').addClass('animated tada');
+        });
+    });
 
     //---------start播放器代码---------
     function Player(el, src) {

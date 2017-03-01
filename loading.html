@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="./css/animate.min.css">
     <link rel="stylesheet" href="./css/dog.css">
     <style type="text/css">
     body,
@@ -159,9 +159,9 @@
     </div>
     <!-- 在没有manifest的情况下，可以hide预先加载不显示的图片，后面再赋值 -->
     <!-- <img class="deferred hide" src="./img/12.jpg" alt=""> -->
-    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/PreloadJS/0.6.0/preloadjs.min.js"></script>
-    <script src="http://cdn.bootcss.com/SoundJS/0.6.0/soundjs.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/preloadjs.min.js"></script>
+    <script src="./js/soundjs.min.js"></script>
     <script>
     //可视区居中显示
     var window_height = $(window).height();
@@ -200,7 +200,7 @@
         $('.container').addClass('fadeIn animated');
         $('.loading').addClass('fadeOut animated');
     });
-    var queue = new createjs.LoadQueue();
+    var queue = new createjs.LoadQueue(false);
     //SoundJS默认用的是复杂的Web Audio接口，这会导致加载音频变慢，所以显示注册使用html的audio即可
     createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
     //如果需要加载音频，需要注册SoundJs插件
