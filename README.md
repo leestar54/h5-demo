@@ -4,5 +4,6 @@
 [（1）素材加载](http://www.cnblogs.com/leestar54/p/h5-demo-loading.html)  
 [（2）音频&视频](http://www.cnblogs.com/leestar54/p/6411495.html)  
 [（3）屏幕滑动](http://www.cnblogs.com/leestar54/p/6486359.html)  
+[（4）弹幕](https://github.com/leestar54/h5-demo/blob/master/danmu.html)  
 
 
