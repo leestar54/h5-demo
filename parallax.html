@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>swiper.js</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./css/animate.min.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+    <link rel="stylesheet" href="./css/dog.css">
+    <style type="text/css">
+    body,
+    html {
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+        max-width: 640px;
+        max-height: 1136px;
+        margin: auto;
+    }
+    
+    .hide {
+        display: none;
+    }
+    
+    .loading,
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        margin: 0;
+        border-radius: 0px;
+        position: relative;
+        /*background-color: rgba(0, 0, 0, 0.5);*/
+    }
+    
+    .swiper-slide img {
+        width: 100%;
+        position: absolute;
+        top: 20%
+    }
+    /*滑动提示*/
+    
+    #array {
+        position: absolute;
+        z-index: 999;
+        animation: tipmove 1.5s infinite ease-in-out;
+        -webkit-animation: tipmove 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes tipmove {
+        0% {
+            bottom: 10px;
+            opacity: 0
+        }
+        50% {
+            bottom: 15px;
+            opacity: 1
+        }
+        100% {
+            bottom: 20px;
+            opacity: 0
+        }
+    }
+    
+    @-webkit-keyframes tipmove {
+        0% {
+            bottom: 10px;
+            opacity: 0
+        }
+        50% {
+            bottom: 15px;
+            opacity: 1
+        }
+        100% {
+            bottom: 20px;
+            opacity: 0
+        }
+    }
+    /*音乐按钮*/
+    
+    #wraper_music {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
+        z-index: 999;
+        border-radius: 40px;
+        display: block;
+    }
+    
+    #btn_play_music {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        background-size: 40px 40px;
+    }
+    
+    .c_btn_play_music_playing {
+        background: url(./img/music_playing.png) no-repeat;
+        -webkit-animation: kf_music_playing 8s linear infinite;
+        animation: kf_music_playing 8s linear infinite;
+    }
+    
+    .c_btn_play_music_paused {
+        background: url(./img/music_stop.png) no-repeat;
+    }
+    
+    @keyframes kf_music_playing {
+        0% {
+            -webkit-transform: rotateZ(0deg);
+        }
+        100% {
+            -webkit-transform: rotateZ(360deg);
+        }
+    }
+    
+    @-webkit-keyframes kf_music_playing {
+        0% {
+            -webkit-transform: rotateZ(0deg);
+        }
+        100% {
+            -webkit-transform: rotateZ(360deg);
+        }
+    }
+    
+    @media screen and (max-width: 380px) {
+        #btn_qtcs {
+            font-size: small;
+        }
+        #btn_toumiao {
+            font-size: small;
+        }
+    }
+    
+    @media screen and (max-width: 320px) {
+        #btn_qtcs {
+            font-size: x-small;
+        }
+        #btn_toumiao {
+            font-size: x-small;
+        }
+    }
+    
+    ul {
+        list-style: none;
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .parallax,
+    .parallax .layer {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+    </style>
+</head>
+
+<body style="">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div id="wraper_music">
+                    <div id="btn_play_music" class="c_btn_play_music_playing"></div>
+                </div>
+                <ul class="parallax">
+                    <li class="layer" data-depth="0.5"><img style="position: absolute;left:0;top: 5%" class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="0.3s" src="./img/5.jpg" alt=""></li>
+                    <li class="layer" data-depth="0.2">
+                        <video id="video" style="width: 80%;left: 10%;top: 20%" src="./video/test.mp4" preload autoplay controls>
+                        </video>
+                    </li>
+                </ul>
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/7.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/1.jpg" alt="">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/9.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/2.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/3.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" src="./img/4.jpg" alt="">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <!-- 向上滑动提示 -->
+        <img class="deferred" src="./img/web-swipe-tip.png" style="width:20px;height:15px;left: 50%;margin-left: -10px;" id="array">
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/preloadjs.min.js"></script>
+    <script src="./js/soundjs.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/swiper.animate.min.js"></script>
+    <script src="./js/jquery.parallax.min.js"></script>
+    <script>
+    $('.parallax').parallax();
+
+    //可视区居中显示
+    var window_height = $(window).height();
+    if (window_height > 1136) {
+        var temp_top = ($(window).height() - 1136) / 2;
+        $('body').css('margin-top', temp_top);
+    }
+    //建议使用资源清单，方便管理，如果资源较多，可以考虑独立出json文件，脚本自动生成。
+    var manifest = [{
+        id: '告白气球',
+        src: './audio/107192078.m4a'
+    }, {
+        id: '一生有你',
+        src: './audio/95484.m4a'
+    }, ]
+
+    var music_player;
+    var vd = document.getElementById('video');
+
+    var queue = new createjs.LoadQueue();
+    //SoundJS默认用的是复杂的Web Audio接口，这会导致加载音频变慢，所以显示注册使用html的audio即可
+    createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
+    //如果需要加载音频，需要注册SoundJs插件
+    queue.installPlugin(createjs.Sound);
+    queue.on("complete", function() {
+        //createjs.Sound.play("告白气球");
+        music_player = new Player($('#btn_play_music'), "./audio/107192078.m4a");
+    }, this);
+    queue.on("progress", function(event) {
+        console.log("Progress:", queue.progress, event.progress);
+    });
+    //设置并列加载，否则每次只加载一个，太耗时
+    queue.setMaxConnections(5);
+    queue.maintainScriptOrder = true;
+    queue.loadManifest(manifest);
+
+    $(function() {
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            loop: false,
+            pagination: '.swiper-pagination',
+            onInit: function(swiper) {
+                swiperAnimateCache(swiper); //隐藏动画元素 
+                swiperAnimate(swiper); //初始化完成开始动画
+            },
+            onSlideChangeEnd: function(swiper) {
+                swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+                if (swiper.activeIndex != 0) {
+                    vd.pause();
+                    music_player._playOff();
+                } else {
+                    vd.play();
+                    music_player._playOn();
+                }
+            }
+        });
+
+        //重复执行动画
+        $('.swiper-slide:eq(0) img').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $(this).removeClass('animated fadeInUp bounceInRight');
+            $('.swiper-slide:eq(0) img').addClass('animated tada');
+        });
+    });
+
+    //---------start播放器代码---------
+    function Player(el, src) {
+        this.el = el;
+        this.isPlay = true;
+        if (src == undefined) {
+            src = '';
+        }
+        this.init(src);
+    }
+    Player.prototype = {
+            init: function(src) {
+                var _this = this,
+                    attr = {
+                        loop: true,
+                        preload: "auto",
+                        autoplay: true,
+                        src: src
+                    };
+
+                this._audio = new Audio;
+                for (var i in attr) {
+                    attr.hasOwnProperty(i) && i in this._audio && (this._audio[i] = attr[i]);
+                }
+
+                this.inited = false;
+                $(this._audio).on('durationchange', function() {
+                    // 播放加载
+                    if (_this._audio.duration > 1) {
+                        _this.inited = true;
+                    }
+                });
+
+                $(this._audio).on('ended', function() {
+                    // 播放结束
+                    _this._audio.currentTime = 0;
+                    _this.isPlay = false;
+                    _this._play();
+                });
+
+                if (src != '') {
+                    this._audio.load();
+                }
+
+                if (typeof this.el !== 'string') {
+                    this.el.on('click', function() {
+                        _this._play();
+                    });
+                }
+            },
+
+            _load: function() {
+                this._audio.load();
+            },
+
+            _src: function(src) {
+                this._audio['src'] = src;
+            },
+
+            _isplay: function() {
+                return this.isPlay;
+            },
+
+            _play: function() {
+                if (!this.isPlay) {
+                    this._audio.play();
+                    if (typeof this.el !== 'string') {
+                        this.el.removeClass('c_btn_play_music_paused');
+                        this.el.addClass('c_btn_play_music_playing');
+                    }
+                } else {
+                    this._audio.pause();
+                    if (typeof this.el !== 'string') {
+                        this.el.removeClass('c_btn_play_music_playing');
+                        this.el.addClass('c_btn_play_music_paused');
+                    }
+                }
+                this.isPlay = !this.isPlay;
+            },
+
+            _playOn: function() {
+                this._audio.play();
+                if (typeof this.el !== 'string') {
+                    this.el.removeClass('c_btn_play_music_paused');
+                    this.el.addClass('c_btn_play_music_playing');
+                }
+                this.isPlay = true;
+            },
+
+            _playOff: function() {
+                this._audio.pause();
+                if (typeof this.el !== 'string') {
+                    this.el.removeClass('c_btn_play_music_playing');
+                    this.el.addClass('c_btn_play_music_paused');
+                }
+                this.isPlay = false;
+            },
+
+            _volume: function(num) {
+                this._audio.volume = num;
+            }
+        }
+        //---------end播放器代码---------
+    </script>
+</body>
+
+</html>
