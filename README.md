@@ -6,4 +6,8 @@
 [（3）屏幕滑动](http://www.cnblogs.com/leestar54/p/6486359.html)  
 [（4）弹幕](http://www.cnblogs.com/leestar54/p/6523620.html)  
 [（5）视差效果](http://www.cnblogs.com/leestar54/p/6786752.html)  
-[（6）数字滚动](http://www.cnblogs.com/leestar54/p/7481934.html)
+[（6）数字滚动](http://www.cnblogs.com/leestar54/p/7481934.html)  
+[（7）屏幕适配](http://www.cnblogs.com/leestar54/p/8296048.html)
+
+
+

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        background-color: lightgray;
+    }
+
+    .wrapper {
+        background: url('./img/timg.jpg') no-repeat center;
+        background-size: cover;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .container {
+        position: relative;
+        height: 100%;
+    }
+
+    .banner {
+        height: 30%;
+        background-color: bisque;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 2%;
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2%;
+        height: 32.5%;
+    }
+
+    .item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: pink;
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="banner">
+                banner
+            </div>
+            <div class="row">
+                <div class="item" style="margin-right: 1%">
+                    列表项
+                </div>
+                <div class="item" style="margin-left: 1%">
+                    列表项
+                </div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    列表项
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    var fontSize = $('html').css('font-size').slice(0, -2);
+
+    function measureArea() {
+        var height = $(window).height();
+        var width = $(window).width();
+
+        var temp_width = height * 10 / 16;
+        if (temp_width < width) {
+            $('.container').css('width', temp_width + 'px');
+            $('.wrapper').css('max-width', temp_width + 'px');
+        } else {
+            $('.container').css('width', width + 'px');
+            $('.container').css('height', width * 16 / 10 + 'px');
+            $('html').css('font-size', fontSize * (width / temp_width) + 'px');
+        }
+    }
+    window.onresize = measureArea;
+    measureArea();
+    </script>
+</body>
+
+</html>
